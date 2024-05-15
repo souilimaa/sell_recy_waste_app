@@ -171,7 +171,7 @@ class _LoginState extends State<Login> {
                                 if (isLogin) {
                                   print('User login successfully');
                                   print("pfhdkjfgjksdf");
-                                  Navigator.pushNamed(context,'/profile');
+                                  Navigator.pushNamed(context,'/addProduct');
 
                                 }
                                 else {

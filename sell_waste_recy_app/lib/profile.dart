@@ -59,8 +59,8 @@ class _ProfileState extends State<Profile> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
                       } else if (snapshot.hasData) {
-                        final user = snapshot.data!;
-                        if (user.image != "") {
+                        final user = snapshot.data!.image;
+                        if (user!="") {
                           return CircleAvatar(
                             radius: 70,
                             backgroundImage: NetworkImage(
@@ -69,9 +69,10 @@ class _ProfileState extends State<Profile> {
                             ),
                           );
                         } else {
+                          print('hhhehehe');
                           return CircleAvatar(
                             radius: 70,
-                            backgroundImage: AssetImage('assets/defaultuapp.png'),
+                            backgroundImage: AssetImage("assets/defaultupp.png"),
                           );
                         }
                       } else if (snapshot.hasError) {

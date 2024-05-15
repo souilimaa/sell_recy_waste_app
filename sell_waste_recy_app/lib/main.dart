@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'addProductNext.dart';
 import 'home.dart';
 import 'login.dart';
 import 'signup.dart';
 import 'profile.dart';
 import 'auth.dart';
 import 'editProfile.dart';
-import 'sellerDash.dart';
-
+import 'addProduct.dart';
 void main() async {
 
   await AuthController.authenticate();
@@ -20,7 +20,9 @@ void main() async {
       '/login': (context) => Login(),
       '/signup': (context) => Signup(),
       '/profile':(context)=>Profile(),
-      '/editProfile':(context)=>EditProfile()
+      '/editProfile':(context)=>EditProfile(),
+      '/addProduct':(context)=>AddProduct(),
+      '/addProductNext':(context)=>AddProductNext()
     },
   ));
 }

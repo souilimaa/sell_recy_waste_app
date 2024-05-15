@@ -8,7 +8,7 @@ class UserController {
   static int userId = 0;
 
   static Future<bool> getUserByEmail(String email) async {
-    const url = "http://192.168.0.6:8017/getUserByEmail";
+    const url = "http://10.10.10.32:8017/getUserByEmail";
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -39,7 +39,7 @@ class UserController {
     try {
       bool isExist = await getUserByEmail(u.email);
       if (!isExist) {
-        String url = 'http://192.168.0.6:8017/addUser';
+        String url = 'http://10.10.10.32:8017/addUser';
         Map<String, dynamic> body = {
           "name": u.name,
           "email": u.email,
@@ -73,7 +73,7 @@ class UserController {
   }
 
   static Future<bool> login(User u) async {
-      String url = 'http://192.168.0.6:8017/userLogin';
+      String url = 'http://10.10.10.32:8017/userLogin';
       Map<String, dynamic> body = {
         "email": u.email,
         "password": u.password,
@@ -111,7 +111,7 @@ class UserController {
       'Content-Type': 'application/json',
       'Cookie': 'session_id=${AuthController.sessionID}'
     };
-    const url = "http://192.168.0.6:8017/getUser";
+    const url = "http://10.10.10.32:8017/getUser";
     var response = await http.post(Uri.parse(url),
         headers: headers,
         body: jsonEncode({"id": id}));
@@ -137,7 +137,7 @@ class UserController {
 
 
   static Future<bool> updateUser(User u) async {
-    const url = "http://192.168.0.6:8017/updateUser";
+    const url = "http://10.10.10.32:8017/updateUser";
     print(u.id);
     print(u.name);
     var request = http.MultipartRequest('POST', Uri.parse(url));
