@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 
 class AuthController {
   static String sessionID = "";
-
+  static String ip="192.168.0.6";
   static Future<void> authenticate() async {
     var username = "somamy19@gmail.com";
     var password = "salma.04";
-    const url = 'http://10.10.10.32:8017/web/session/authenticate';
+    String url = "http://${ip}:8017/web/session/authenticate";
     const urlRealDevice = 'http://192.168.0.6:8017/web/session/authenticate';
 
     final response = await http.post(Uri.parse(url),

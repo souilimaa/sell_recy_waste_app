@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:sell_waste_recy_app/controllers/userController.dart';
+import 'package:sell_waste_recy_app/controllers/user_controller.dart';
 
-import 'auth.dart';
-import 'models/user.dart';
+import '../models/user.dart';
 class Signup extends StatefulWidget {
   const Signup({super.key});
 

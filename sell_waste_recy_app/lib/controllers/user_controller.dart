@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:sell_waste_recy_app/models/user.dart';
 import 'package:http/http.dart' as http;
 
-import '../auth.dart';
+import 'auth.dart';
 
 class UserController {
   static int userId = 0;
 
   static Future<bool> getUserByEmail(String email) async {
-    const url = "http://10.10.10.32:8017/getUserByEmail";
+    String url = "http://${AuthController.ip}:8017/getUserByEmail";
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -39,7 +39,7 @@ class UserController {
     try {
       bool isExist = await getUserByEmail(u.email);
       if (!isExist) {
-        String url = 'http://10.10.10.32:8017/addUser';
+        String url = 'http://${AuthController.ip}:8017/addUser';
         Map<String, dynamic> body = {
           "name": u.name,
           "email": u.email,
@@ -73,7 +73,7 @@ class UserController {
   }
 
   static Future<bool> login(User u) async {
-      String url = 'http://10.10.10.32:8017/userLogin';
+      String url = 'http://${AuthController.ip}:8017/userLogin';
       Map<String, dynamic> body = {
         "email": u.email,
         "password": u.password,
@@ -111,7 +111,7 @@ class UserController {
       'Content-Type': 'application/json',
       'Cookie': 'session_id=${AuthController.sessionID}'
     };
-    const url = "http://10.10.10.32:8017/getUser";
+    String url = "http://${AuthController.ip}:8017/getUser";
     var response = await http.post(Uri.parse(url),
         headers: headers,
         body: jsonEncode({"id": id}));
@@ -125,7 +125,7 @@ class UserController {
         return User(user['id'],user['name'],user['email'],user['phone'],user['password'],"");
       }
       else{
-
+        print(user['name']);
         return User(user['id'],user['name'],user['email'],user['phone'],user['password'],imageString);
 
       }
@@ -137,7 +137,7 @@ class UserController {
 
 
   static Future<bool> updateUser(User u) async {
-    const url = "http://10.10.10.32:8017/updateUser";
+    String url = "http://${AuthController.ip}:8017/updateUser";
     print(u.id);
     print(u.name);
     var request = http.MultipartRequest('POST', Uri.parse(url));

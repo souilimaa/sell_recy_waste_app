@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'controllers/userController.dart';
-import 'models/user.dart';
+import '../controllers/user_controller.dart';
+import '../models/user.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -171,7 +171,7 @@ class _LoginState extends State<Login> {
                                 if (isLogin) {
                                   print('User login successfully');
                                   print("pfhdkjfgjksdf");
-                                  Navigator.pushNamed(context,'/addProduct');
+                                  Navigator.pushNamed(context,'/acceuil');
 
                                 }
                                 else {

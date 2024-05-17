@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sell_waste_recy_app/controllers/categoryController.dart';
+import 'package:sell_waste_recy_app/controllers/category_controller.dart';
 
-import 'models/category.dart';
-import 'models/product.dart';
+import '../models/category.dart';
+import '../models/product.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -16,7 +16,7 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   File? _image;
-  String imageRquiredError='';
+  String imageRequiredError='';
   final _formKey = GlobalKey<FormState>();
   var description;
   var name;
@@ -49,7 +49,7 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        imageRquiredError='';
+        imageRequiredError='';
       }
     });
   }
@@ -139,7 +139,7 @@ class _AddProductState extends State<AddProduct> {
               ),
               Center(
                 child: Text(
-                  imageRquiredError,
+                  imageRequiredError,
                   style: TextStyle(
                     color: Colors.red,
                   ),
@@ -317,12 +317,13 @@ class _AddProductState extends State<AddProduct> {
                               if(_image==null){
                                 print('tegghdhhjdjhdkhd634535');
                                 setState(() {
-                                  imageRquiredError='Veuillez ajouter l\'image de produit';
+                                  imageRequiredError='Veuillez ajouter l\'image de produit';
 
                                 });
                               }
                                  if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
+                                  print(_selectedCategory);
                                   Navigator.pushNamed(
                                     context,
                                     '/addProductNext',

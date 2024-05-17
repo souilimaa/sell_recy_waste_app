@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sell_waste_recy_app/auth.dart';
-import 'controllers/userController.dart';
-import 'models/user.dart';
 import 'dart:async';
+
+import '../controllers/user_controller.dart';
+import '../models/user.dart';
+import '../controllers/auth.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -26,8 +27,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.green,
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: Text(
-            textAlign: TextAlign.center,
+          title: const Text(
             'Profil',
             style: TextStyle(
               color: Colors.white,
@@ -35,11 +35,13 @@ class _ProfileState extends State<Profile> {
               fontSize: 16,
             ),
           ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 13,
             ),
             Center(
@@ -57,10 +59,10 @@ class _ProfileState extends State<Profile> {
                     future: u,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else if (snapshot.hasData) {
-                        final user = snapshot.data!.image;
-                        if (user!="") {
+                        final user = snapshot.data!;
+                        if (user.image!="") {
                           return CircleAvatar(
                             radius: 70,
                             backgroundImage: NetworkImage(
@@ -69,23 +71,22 @@ class _ProfileState extends State<Profile> {
                             ),
                           );
                         } else {
-                          print('hhhehehe');
-                          return CircleAvatar(
+                          return const CircleAvatar(
                             radius: 70,
-                            backgroundImage: AssetImage("assets/defaultupp.png"),
+                            backgroundImage: AssetImage("assets/default_supp.png"),
                           );
                         }
                       } else if (snapshot.hasError) {
                         print('${snapshot.error}');
                         return Text('${snapshot.error}');
                       }
-                      return CircularProgressIndicator(); // This line should not be necessary, but added for completeness.
+                      return const CircularProgressIndicator(); // This line should not be necessary, but added for completeness.
                     },
                   )
                 ),
               ]),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FutureBuilder<User>(
@@ -95,7 +96,7 @@ class _ProfileState extends State<Profile> {
                   return Text(
                     snapshot.data!.name,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 23,
                       color: Colors.white,
@@ -229,8 +230,10 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
-                            // Add your onPressed logic here
-                          },
+                            Navigator.pushNamed(
+                                context,
+                                '/sellerDash');
+                            },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
@@ -309,8 +312,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         TextButton(
                           onPressed: () {
-                            // Add your onPressed logic here
-                          },
+                            Navigator.pushReplacementNamed(context, '/');                         },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),

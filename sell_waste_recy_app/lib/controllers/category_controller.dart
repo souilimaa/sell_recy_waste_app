@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../auth.dart';
 import '../models/category.dart';
+import 'auth.dart';
 
 class CategoryController {
   static Future<List<Category>> getCategories() async {
-    const url = "http://10.10.10.32:8017/getAllCategories";
+    String url = "http://${AuthController.ip}:8017/getAllCategories";
 
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -26,7 +26,7 @@ class CategoryController {
         return Category(categoryJson['id'], categoryJson['name']);
       }).toList();
       print(categories);
-      print('succsess');
+      print('success');
       return categories;
       } else {
         print(

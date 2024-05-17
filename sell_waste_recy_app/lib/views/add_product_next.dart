@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sell_waste_recy_app/controllers/productController.dart';
-import 'package:sell_waste_recy_app/controllers/userController.dart';
+import 'package:sell_waste_recy_app/controllers/product_controller.dart';
+import 'package:sell_waste_recy_app/controllers/user_controller.dart';
 
-import 'models/product.dart';
+import '../models/product.dart';
 
 class AddProductNext extends StatefulWidget {
   const AddProductNext({super.key});
@@ -194,7 +194,7 @@ class _AddProductNextState extends State<AddProductNext> {
                                               qty_available,
                                               seller_id,
                                               list_price);
-                                          bool success = await ProductController.AddProduct(product);
+                                          bool success = await ProductController.addProduct(product);
 
                                           if (success) {
                                             print('Product added successfully');

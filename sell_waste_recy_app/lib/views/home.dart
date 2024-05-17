@@ -8,6 +8,8 @@ class Home extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+
           backgroundColor: Colors.white,
           title: Padding(
             padding: const EdgeInsets.fromLTRB(10, 15,10,10),

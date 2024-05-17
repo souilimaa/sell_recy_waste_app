@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
-import 'editProfile.dart';
-import 'login.dart';
+import 'package:sell_waste_recy_app/views/profile.dart';
+
+import 'edit_profile.dart';
+import 'log_in.dart';
 class Menu extends StatefulWidget {
   @override
   State<Menu> createState() => _MenuState();
@@ -25,25 +26,30 @@ class _MenuState extends State<Menu> {
             _currentIndex = index;
           });
           // Navigate to the corresponding screen
+          void _home() {
+            Navigator.popUntil(context, ModalRoute.withName('/acceuil'));
+          }
           switch (index) {
             case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditProfile()),
-              );
-              break;
+              _home();
+              _currentIndex = index;
+                break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Login()),
               );
-              break;
+              setState(() {
+                _currentIndex = index;
+              });              break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Profile()),
               );
-              break;
+              setState(() {
+                _currentIndex = index;
+              });              break;
           }
         },
         items: [
@@ -65,5 +71,6 @@ class _MenuState extends State<Menu> {
         backgroundColor: Colors.white,
 
     );
+
   }
 }

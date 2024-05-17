@@ -1,11 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'auth.dart';
-import 'controllers/userController.dart';
-import 'models/user.dart';
+import '../controllers/user_controller.dart';
+import '../models/user.dart';
+import '../controllers/auth.dart';
+
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -107,6 +107,8 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.green,
           title: Text(
             textAlign: TextAlign.center,
@@ -425,6 +427,7 @@ class _EditProfileState extends State<EditProfile> {
 
                                   if (success) {
                                     print('User updated successfully');
+                                    Navigator.pushNamed(context, '/profile');
                                   } else {
                                     print('Failed to update user');
                                   }

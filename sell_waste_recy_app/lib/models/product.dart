@@ -9,5 +9,7 @@ class Product{
   var list_price;
   Product(this.id,this.name,this.description,this.categ_id,this.image,this.qty_available,this.seller_id,this.list_price);
   Product.withoutId(this.name,this.description,this.categ_id,this.image,this.qty_available,this.seller_id,this.list_price);
-
+  String toString() {
+    return 'Product{id: $id, name: $name}';
+  }
 }
