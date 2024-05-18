@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../controllers/user_controller.dart';
+import '../models/user.dart';
+
 class SellerDash extends StatefulWidget {
   const SellerDash({super.key});
 
@@ -10,6 +13,12 @@ class SellerDash extends StatefulWidget {
 }
 
 class _SellerDashState extends State<SellerDash> {
+  late Future<User> u;
+  @override
+  void initState() {
+    super.initState();
+    u = UserController.getUserById(UserController.userId);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,14 +48,27 @@ class _SellerDashState extends State<SellerDash> {
             height: 90,
             child: Container(
               margin: EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 15),
-              child: Text(
-                'Bonjour Salma',
-                style: GoogleFonts.jost(
-                  textStyle: TextStyle(
-                      color: Colors.grey[200],
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold),
-                ),
+              child:
+              FutureBuilder<User>(
+                future: u,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      'Bonjour ${snapshot.data!.name}',
+                      style: GoogleFonts.jost(
+                        textStyle: TextStyle(
+                            color: Colors.grey[200],
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    print('${snapshot.error}');
+                    return Text('${snapshot.error}');
+                  }
+
+                  return const CircularProgressIndicator();
+                },
               ),
             ),
           ),

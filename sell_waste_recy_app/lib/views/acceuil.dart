@@ -69,7 +69,7 @@ class _AcceuilState extends State<Acceuil> {
             'Découvrir',
             style: GoogleFonts.karla(
               textStyle:TextStyle(
-                fontSize: 23,
+                fontSize: 22,
                 color: Colors.white,
               ),
             ),

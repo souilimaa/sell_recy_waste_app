@@ -3,10 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../controllers/auth.dart';
 import '../controllers/product_controller.dart';
 import '../models/product.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ProductDetails extends StatefulWidget {
   final int id;
-  ProductDetails({required this.id});
+  const ProductDetails({super.key, required this.id});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -50,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Text(
                 "${myProduct?.list_price} MAD",
                 style: TextStyle(
-                  fontSize: 21,
+                  fontSize: 20,
 
                   fontWeight: FontWeight.bold,
                 ),
@@ -103,28 +104,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(
                       height: 3,
                     ),
-                    Text(
-                      myProduct!.name,
-                      style: GoogleFonts.notoSansDisplay(
-                        textStyle:TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          myProduct!.name,
+                          style: GoogleFonts.notoSansDisplay(
+                            textStyle:TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                          ),
                         ),
-                      ),
+                        ElevatedButton(onPressed: (){},
+                        child: Text(
+                          'En Stock',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              )
+                            ))
+                      ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      myProduct!.description,
-                    ),
+                    Html(
+                      data:myProduct!.description,
+                    )
+
                   ],
                 ),
               ),

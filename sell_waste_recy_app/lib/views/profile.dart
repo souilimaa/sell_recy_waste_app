@@ -51,11 +51,11 @@ class _ProfileState extends State<Profile> {
               child: Stack(children: [
                 Container(
                   decoration: BoxDecoration(
-                    // shape: BoxShape.circle,
-                    // border: Border.all(
-                    //   color: Colors.green.shade200,
-                    //   width: 2,
-                    // ),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.green.shade200,
+                      width: 2,
+                    ),
                   ),
                   child: FutureBuilder<User>(
                     future: u,

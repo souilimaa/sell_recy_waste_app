@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class AuthController {
   static String sessionID = "";
-  static String ip="192.168.0.6";
+  static String ip="192.168.0.5";
   static Future<void> authenticate() async {
     var username = "somamy19@gmail.com";
     var password = "salma.04";
