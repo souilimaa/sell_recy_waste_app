@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 import '../controllers/user_controller.dart';
@@ -24,36 +25,37 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Text(
+          iconTheme: IconThemeData(color: Colors.white),
+          title:  Text(
             'Profil',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+            style: GoogleFonts.assistant(
+              textStyle:TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18  ,
+              )
             ),
           ),
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(
-              height: 13,
+              height: 20,
             ),
             Center(
               child: Stack(children: [
                 Container(
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.green.shade200,
-                      // Choose your desired border color
-                      width: 2, // Choose the width of the border
-                    ),
+                    // shape: BoxShape.circle,
+                    // border: Border.all(
+                    //   color: Colors.green.shade200,
+                    //   width: 2,
+                    // ),
                   ),
                   child: FutureBuilder<User>(
                     future: u,
@@ -87,7 +89,7 @@ class _ProfileState extends State<Profile> {
               ]),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             FutureBuilder<User>(
               future: u,
@@ -99,7 +101,7 @@ class _ProfileState extends State<Profile> {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 23,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -119,7 +121,7 @@ class _ProfileState extends State<Profile> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey[350],
+                      color: Colors.grey,
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -139,9 +141,9 @@ class _ProfileState extends State<Profile> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
-                        color: Colors.green.shade50,
+                        color: Colors.grey.shade100,
                         // Choose your desired border color
-                        width: 2, // Choose the width of the border
+                        width: 1, // Choose the width of the border
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft:

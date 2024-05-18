@@ -91,7 +91,7 @@ class Home extends StatelessWidget {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      minimumSize: Size(300, 45),
+                      minimumSize: Size(300,45),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SellerDash extends StatefulWidget {
   const SellerDash({super.key});
@@ -16,13 +17,15 @@ class _SellerDashState extends State<SellerDash> {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-              'Gestion des ventes',
-              style: TextStyle(
+            'Gestion des ventes',
+            style: GoogleFonts.assistant(
+              textStyle: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 18,
               ),
             ),
+          ),
           centerTitle: true,
           backgroundColor: Colors.green,
         ),
@@ -38,10 +41,11 @@ class _SellerDashState extends State<SellerDash> {
               margin: EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 15),
               child: Text(
                 'Bonjour Salma',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 23,
+                style: GoogleFonts.jost(
+                  textStyle: TextStyle(
+                      color: Colors.grey[200],
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -108,9 +112,7 @@ class _SellerDashState extends State<SellerDash> {
                               child: IconButton(
                                 iconSize: 38,
                                 onPressed: () {
-                                  Navigator.pushNamed(
-                                      context,
-                                      '/addProduct');
+                                  Navigator.pushNamed(context, '/addProduct');
                                 },
                                 padding: EdgeInsets.zero,
                                 icon: Icon(

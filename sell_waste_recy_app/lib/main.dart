@@ -5,6 +5,7 @@ import 'package:sell_waste_recy_app/controllers/auth.dart';
 import 'package:sell_waste_recy_app/views/edit_profile.dart';
 import 'package:sell_waste_recy_app/views/home.dart';
 import 'package:sell_waste_recy_app/views/log_in.dart';
+import 'package:sell_waste_recy_app/views/product_details.dart';
 import 'package:sell_waste_recy_app/views/profile.dart';
 import 'package:sell_waste_recy_app/views/seller_dash.dart';
 import 'package:sell_waste_recy_app/views/sign_up.dart';
@@ -28,6 +29,8 @@ void main() async {
       '/addProductNext':(context)=>AddProductNext(),
       '/sellerDash':(context)=>SellerDash(),
       '/acceuil':(context)=>Acceuil(),
+
+
     },
   ));
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sell_waste_recy_app/controllers/product_controller.dart';
 import 'package:sell_waste_recy_app/models/product.dart';
+import 'package:sell_waste_recy_app/views/product_details.dart';
 import '../controllers/category_controller.dart';
 import '../controllers/auth.dart';
 import 'menu.dart';
@@ -64,17 +65,17 @@ class _AcceuilState extends State<Acceuil> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Container(
-          margin: EdgeInsets.only(left: 8, top: 20),
           child: Text(
             'Découvrir',
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: "Shippori Mincho",
-              color: Colors.black54,
+            style: GoogleFonts.karla(
+              textStyle:TextStyle(
+                fontSize: 23,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green,
       ),
       bottomNavigationBar: Menu(),
       body: SingleChildScrollView(
@@ -265,7 +266,7 @@ class _AcceuilState extends State<Acceuil> {
         ),
       ),
 
-      Container(
+          Container(
         margin: const EdgeInsets.only(top: 5, right: 10),
         child: GridView.builder(
           shrinkWrap: true,
@@ -278,7 +279,16 @@ class _AcceuilState extends State<Acceuil> {
           ),
           itemCount: productList.length,
           itemBuilder: (context, index) {
-            return Container(
+            return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetails(id: productList[index].id),
+                    ),
+                  );
+            },
+            child:  Container(
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -314,7 +324,7 @@ class _AcceuilState extends State<Acceuil> {
                   )
                 ],
               ),
-            );
+            ));
           },
         ),
       ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sell_waste_recy_app/controllers/category_controller.dart';
 
@@ -57,16 +58,17 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(
-            child: Text(
+          title: Text(
               'Ajouter un Produit',
-              style: TextStyle(
+            style: GoogleFonts.assistant(
+              textStyle:TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 18,
               ),
-            ),
-          ),
+            )),
+          iconTheme: IconThemeData(color: Colors.white),
+          centerTitle: true,
           backgroundColor: Colors.green,
         ),
         body: SingleChildScrollView(

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import '../controllers/user_controller.dart';
 import '../models/user.dart';
@@ -113,10 +114,12 @@ class _EditProfileState extends State<EditProfile> {
           title: Text(
             textAlign: TextAlign.center,
             'Editer le profil',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+            style: GoogleFonts.assistant(
+                textStyle:TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
             ),
           ),
         ),

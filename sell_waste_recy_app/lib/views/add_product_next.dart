@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sell_waste_recy_app/controllers/product_controller.dart';
 import 'package:sell_waste_recy_app/controllers/user_controller.dart';
 
@@ -32,16 +33,18 @@ class _AddProductNextState extends State<AddProductNext> {
     Product newProduct = ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
         appBar: AppBar(
-          title: Center(
-            child: Text(
+          title: Text(
               'Ajouter un Produit',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
+        style: GoogleFonts.assistant(
+          textStyle:TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
+        )
+            ),
+          iconTheme: IconThemeData(color: Colors.white),
+          centerTitle: true,
           backgroundColor: Colors.green,
         ),
         body: SingleChildScrollView(

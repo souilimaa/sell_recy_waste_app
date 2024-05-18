@@ -132,7 +132,7 @@ class ProductController {
       return products;
     }
   }
-  static Future<Product> getProductById(String name) async {
+  static Future<Product> getProductById(int id) async {
     String url = "http://${AuthController.ip}:8017/getProduct";
 
     final response = await http.post(Uri.parse(url),
@@ -140,7 +140,7 @@ class ProductController {
           'Content-Type': 'application/json',
           'Cookie': 'session_id=${AuthController.sessionID}'
         },
-        body: jsonEncode({'name': name}));
+        body: jsonEncode({'id': id}));
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       final Map<String, dynamic> product = jsonResponse['result']['product'];
 
