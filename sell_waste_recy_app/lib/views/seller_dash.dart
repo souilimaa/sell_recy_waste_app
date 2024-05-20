@@ -38,7 +38,6 @@ class _SellerDashState extends State<SellerDash> {
           centerTitle: true,
           backgroundColor: Colors.green,
         ),
-        //bottomNavigationBar: Menu(),
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Container(
             decoration: BoxDecoration(
@@ -177,7 +176,6 @@ class _SellerDashState extends State<SellerDash> {
                 children: [
                   GestureDetector(
                       onTap: () {
-                        // Do something when the container is clicked
                         print('Container clicked!');
                       },
                       child: Container(
@@ -211,7 +209,6 @@ class _SellerDashState extends State<SellerDash> {
                       )),
                   GestureDetector(
                       onTap: () {
-                        // Do something when the container is clicked
                         print('Container clicked!');
                       },
                       child: Container(
@@ -252,7 +249,6 @@ class _SellerDashState extends State<SellerDash> {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          // Do something when the container is clicked
                           print('Container clicked!');
                         },
                         child: Container(
@@ -286,7 +282,6 @@ class _SellerDashState extends State<SellerDash> {
                         )),
                     GestureDetector(
                         onTap: () {
-                          // Do something when the container is clicked
                           print('Container clicked!');
                         },
                         child: Container(

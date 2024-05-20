@@ -11,5 +11,15 @@ class User {
   User(this.id, this.name, this.email, this.phone, this.password,this.image);
   User.withoutId(this.name, this.email, this.phone, this.password,{this.image});
   User.login(this.email,this.password,{this.image});
+  static User jsonToUser(Map<String,dynamic> jsonUser){
+    return User(
+      jsonUser['id'],
+      jsonUser['name'],
+      jsonUser['email'],
+      jsonUser['phone'],
+      jsonUser['password'],
+      jsonUser['image'],
+    );
+  }
 
 }

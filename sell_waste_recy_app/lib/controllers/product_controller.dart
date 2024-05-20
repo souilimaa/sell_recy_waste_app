@@ -13,6 +13,7 @@ class ProductController {
     request.fields['name'] = p.name;
     request.fields['description'] = p.description;
     request.fields['qty_available'] = p.qty_available.toString();
+    print(p.qty_available);
     request.fields['categ_id'] = p.categ_id.toString();
     request.fields['seller_id'] = p.seller_id.toString();
     request.fields['list_price'] = p.list_price.toString();

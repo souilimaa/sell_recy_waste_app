@@ -134,7 +134,6 @@ class _SignupState extends State<Signup> {
                 ),
                 margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
                 child: TextFormField(
-                  //textAlignVertical: TextAlignVertical.bottom,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),

@@ -120,18 +120,8 @@ class UserController {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       print(jsonResponse);
       Map<String, dynamic> user=jsonResponse['result']['user'];
-      String imageString=user['image'];
-      if(imageString.isEmpty ){
-        return User(user['id'],user['name'],user['email'],user['phone'],user['password'],"");
-      }
-      else{
-        print(user['name']);
-        return User(user['id'],user['name'],user['email'],user['phone'],user['password'],imageString);
-
-      }
-
+        return User.jsonToUser(user);
     }
-
     throw Exception('Failed to get user. Status code: ${response.statusCode} }');
   }
 

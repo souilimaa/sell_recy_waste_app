@@ -82,7 +82,7 @@ class _ProfileState extends State<Profile> {
                         print('${snapshot.error}');
                         return Text('${snapshot.error}');
                       }
-                      return const CircularProgressIndicator(); // This line should not be necessary, but added for completeness.
+                      return const CircularProgressIndicator();
                     },
                   )
                 ),
@@ -142,8 +142,7 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                       border: Border.all(
                         color: Colors.grey.shade100,
-                        // Choose your desired border color
-                        width: 1, // Choose the width of the border
+                        width: 1,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft:
@@ -193,12 +192,10 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
-                            // Add your onPressed logic here
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            // Other button styles can be customized here
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,7 +236,6 @@ class _ProfileState extends State<Profile> {
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            // Other button styles can be customized here
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -273,12 +269,10 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
-                            // Add your onPressed logic here
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            // Other button styles can be customized here
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

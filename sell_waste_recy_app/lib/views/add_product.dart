@@ -21,24 +21,23 @@ class _AddProductState extends State<AddProduct> {
   final _formKey = GlobalKey<FormState>();
   var description;
   var name;
-  Category? _selectedCategory; // Change the type to Category
+  Category? _selectedCategory;
 
-  List<Category> list = []; // Initialize the list to empty initially
+  List<Category> list = [];
 
   @override
   void initState() {
     super.initState();
-    fetchCategories(); // Call function to fetch categories when widget initializes
+    fetchCategories();
   }
 
-  // Function to fetch categories asynchronously
   Future<void> fetchCategories() async {
     final categories =
-        await CategoryController.getCategories(); // Get categories from server
+        await CategoryController.getCategories();
     setState(() {
-      list = categories; // Update the list with category names
+      list = categories;
       _selectedCategory =
-          list.isNotEmpty ? list[0] : null; // Set the initial selected category
+          list.isNotEmpty ? list[0] : null;
     });
   }
 
@@ -128,7 +127,7 @@ class _AddProductState extends State<AddProduct> {
                               borderRadius: BorderRadius.circular(40),
                               child: Image.file(
                                 _image!,
-                                fit: BoxFit.cover, // Ensure the image covers the entire container
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -221,7 +220,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                         Container(
                           child: TextFormField(
-                            maxLines: 4, // Allows multiline input
+                            maxLines: 4,
                             keyboardType: TextInputType.multiline,
                             decoration: InputDecoration(
                               hintText: 'Entrer Description De Votre Produit',
@@ -286,9 +285,9 @@ class _AddProductState extends State<AddProduct> {
                                   color: Colors.green,
 
                                 ),
-                                underline: Container( // Change color of underline
+                                underline: Container(
                                   height: 1,
-                                  color: Colors.green[100], // Change color here
+                                  color: Colors.green[100],
                                 ),
                                 items: list.map((Category item) {
                                   return DropdownMenuItem<Category>(

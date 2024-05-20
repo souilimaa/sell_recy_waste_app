@@ -12,4 +12,17 @@ class Product{
   String toString() {
     return 'Product{id: $id, name: $name}';
   }
+  static Product jsonToProduct(Map<String,dynamic> jsonProduct){
+    return Product(
+      jsonProduct['id'],
+      jsonProduct['name'],
+      jsonProduct['description'],
+      jsonProduct['categ_id'],
+      jsonProduct['image'],
+      jsonProduct['qty_available'],
+      jsonProduct['seller_id'],
+      jsonProduct['list_price'],
+
+    );
+  }
 }

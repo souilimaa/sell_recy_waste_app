@@ -135,8 +135,7 @@ class _EditProfileState extends State<EditProfile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: Colors.green.shade200,
-                      // Choose your desired border color
-                      width: 2, // Choose the width of the border
+                      width: 2,
                     ),
                   ),
                   child: CircleAvatar(
