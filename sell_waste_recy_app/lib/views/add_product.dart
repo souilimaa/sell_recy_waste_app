@@ -316,7 +316,6 @@ class _AddProductState extends State<AddProduct> {
 
                             onPressed: () {
                               if(_image==null){
-                                print('tegghdhhjdjhdkhd634535');
                                 setState(() {
                                   imageRequiredError='Veuillez ajouter l\'image de produit';
 

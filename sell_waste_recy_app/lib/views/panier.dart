@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sell_waste_recy_app/controllers/auth.dart';
 import 'package:sell_waste_recy_app/controllers/product_controller.dart';
 import 'package:sell_waste_recy_app/models/cart.dart';
+import 'package:sell_waste_recy_app/views/check_out.dart';
 
 import '../models/product.dart';
 
@@ -53,7 +54,6 @@ class _PanierState extends State<Panier> {
   }
   @override
   Widget build(BuildContext context) {
-    print(panier);
     if (Panier.panierList.length > 0) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -76,7 +76,17 @@ class _PanierState extends State<Panier> {
           ),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>CheckOut()),
+              ).then((reloadNeeded) {
+                setState(() {
+
+                });
+              });
+            },
             child: Text(
               'Checkout Pour ${totalPanier()} MAD',
               style: TextStyle(

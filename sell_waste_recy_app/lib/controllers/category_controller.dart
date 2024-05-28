@@ -34,6 +34,28 @@ class CategoryController {
         );
         return categories;
       }
+  }
+  static Future<String> getCategoryNameById(int categoryId) async {
+    final url = Uri.parse('http://${AuthController.ip}:8017/getCategoryById');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'session_id=${AuthController.sessionID}'
+      },
+      body: jsonEncode({
+        'categ_id': categoryId,
+      }
+      ),
+    );
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final Map<String, dynamic> result = data['result'];
+      if (result['success'] == true) {
+        return result['category_name'];
+      }
+    }
+    return '';
   }
 }

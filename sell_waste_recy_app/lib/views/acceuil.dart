@@ -272,7 +272,7 @@ class _AcceuilState extends State<Acceuil> {
                 ),
               ),
 
-              Container(
+              productList.length!=0?Container(
                 margin: const EdgeInsets.only(top: 5, right: 10),
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -342,6 +342,16 @@ class _AcceuilState extends State<Acceuil> {
                           ),
                         ));
                   },
+                ),
+              ):Container(
+                margin: EdgeInsets.all(50),
+                child: Center(
+                  child: Text(
+                    'No Product found',
+                    style: TextStyle(
+                      // Define your text style here...
+                    ),
+                  ),
                 ),
               ),
             ],

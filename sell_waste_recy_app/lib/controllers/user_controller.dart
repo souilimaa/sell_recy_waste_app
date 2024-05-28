@@ -21,7 +21,6 @@ class UserController {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         bool success = jsonResponse['result']['success'];
-        print(success);
         return success; // Return success value
       } else {
         print(
@@ -57,7 +56,6 @@ class UserController {
         );
         if (response.statusCode == 200) {
           var jsonResponse = json.decode(response.body);
-          print(jsonResponse);
           return true;
         } else {
           print('Request failed with status: ${response.statusCode}');
@@ -91,8 +89,7 @@ class UserController {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         bool success = jsonResponse['result']['success'];
         if (success) {
-          userId = jsonResponse['result']['user'];
-          print(userId);
+          userId=jsonResponse['result']['user'];
           return true;
         }
         else{
@@ -114,13 +111,15 @@ class UserController {
     String url = "http://${AuthController.ip}:8017/getUser";
     var response = await http.post(Uri.parse(url),
         headers: headers,
-        body: jsonEncode({"id": id}));
+        body: jsonEncode({"id": UserController.userId}));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
-      Map<String, dynamic> user=jsonResponse['result']['user'];
-        return User.jsonToUser(user);
+      Map<String, dynamic> result=jsonResponse['result'];
+      Map<String, dynamic> user=result['user'];
+
+      return User(user['id'],user['name'],user['email'],user['phone'],user['password'],user['image']);
+
     }
     throw Exception('Failed to get user. Status code: ${response.statusCode} }');
   }
@@ -128,8 +127,6 @@ class UserController {
 
   static Future<bool> updateUser(User u) async {
     String url = "http://${AuthController.ip}:8017/updateUser";
-    print(u.id);
-    print(u.name);
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.headers.addAll({
       'Cookie': 'session_id=${AuthController.sessionID}'
@@ -157,7 +154,6 @@ class UserController {
 
       return jsonResponse['success'];
     } else {
-      print("j");
       return false;
     }
   }

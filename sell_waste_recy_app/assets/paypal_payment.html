@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayPal JS SDK Standard Integration</title>
+</head>
+<body>
+<div id="paypal-button-container"></div>
+<p id="result-message"></p>
+
+<!-- Initialize the JS-SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+<script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '10.00' // Can dynamically set this value based on Flutter input
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          // Handle successful capture
+          window.flutter_inappwebview.callHandler('onApprove', JSON.stringify(details));
+        });
+      },
+      onCancel: function(data) {
+        // Handle cancel event
+        window.flutter_inappwebview.callHandler('onCancel', JSON.stringify(data));
+      },
+      onError: function(err) {
+        // Handle error event
+        window.flutter_inappwebview.callHandler('onError', JSON.stringify(err));
+      }
+    }).render('#paypal-button-container');
+</script>
+</body>
+</html>

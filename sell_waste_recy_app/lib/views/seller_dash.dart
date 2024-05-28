@@ -14,11 +14,13 @@ class SellerDash extends StatefulWidget {
 
 class _SellerDashState extends State<SellerDash> {
   late Future<User> u;
+
   @override
   void initState() {
     super.initState();
     u = UserController.getUserById(UserController.userId);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +40,9 @@ class _SellerDashState extends State<SellerDash> {
           centerTitle: true,
           backgroundColor: Colors.green,
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.green, width: 0),
@@ -47,8 +51,7 @@ class _SellerDashState extends State<SellerDash> {
             height: 90,
             child: Container(
               margin: EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 15),
-              child:
-              FutureBuilder<User>(
+              child: FutureBuilder<User>(
                 future: u,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -176,7 +179,7 @@ class _SellerDashState extends State<SellerDash> {
                 children: [
                   GestureDetector(
                       onTap: () {
-                        print('Container clicked!');
+                        Navigator.pushNamed(context, '/sellerProducts');
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -209,7 +212,7 @@ class _SellerDashState extends State<SellerDash> {
                       )),
                   GestureDetector(
                       onTap: () {
-                        print('Container clicked!');
+                        Navigator.pushNamed(context, '/sellerOrders');
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -282,7 +285,7 @@ class _SellerDashState extends State<SellerDash> {
                         )),
                     GestureDetector(
                         onTap: () {
-                          print('Container clicked!');
+                          Navigator.pushNamed(context, '/revenue');
                         },
                         child: Container(
                           width: 160,

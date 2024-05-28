@@ -192,6 +192,8 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
+                            Navigator.pushNamed(context, '/mesCommandes');
+
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:sell_waste_recy_app/controllers/user_controller.dart';
+
 import '../models/product.dart';
 import 'package:http/http.dart' as http;
 
@@ -146,8 +148,42 @@ class ProductController {
       final Map<String, dynamic> product = jsonResponse['result']['product'];
 
       Product myProduct =Product(product['id'], product['name'], product['description'], product['categ_id'], product['image'], product['qty_available'], product['seller_id'], product['list_price']);
-      print(myProduct);
-      print('success');
       return myProduct;
   }
+  static Future<List<dynamic>> getProductsBySeller() async {
+    String url = "http://${AuthController.ip}:8017/getProductBySeller";
+
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': 'session_id=${AuthController.sessionID}'
+        },
+        body: jsonEncode({'seller_id': UserController.userId}));
+    final Map<String, dynamic> jsonResponse = json.decode(response.body);
+    final List<dynamic> product = jsonResponse['result'];
+    return product;
+  }
+  static Future<void> updateProduct(var productId, var qtyAvailable, var listPrice) async {
+    final url = Uri.parse('http://${AuthController.ip}:8017/updateProduct');
+
+    final response = await http.post(
+      url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': 'session_id=${AuthController.sessionID}'
+        },
+        body: jsonEncode({
+          'product_id': productId,
+          'qty_available': qtyAvailable,
+          'liste_price': listPrice
+        })
+    );
+
+    if (response.statusCode == 200) {
+      print('Product updated successfully');
+    } else {
+      print('Error updating product: ${response.reasonPhrase}');
+    }
+  }
+
 }

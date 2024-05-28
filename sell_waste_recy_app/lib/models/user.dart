@@ -11,6 +11,7 @@ class User {
   User(this.id, this.name, this.email, this.phone, this.password,this.image);
   User.withoutId(this.name, this.email, this.phone, this.password,{this.image});
   User.login(this.email,this.password,{this.image});
+  User.order(this.name,this.email,this.phone);
   static User jsonToUser(Map<String,dynamic> jsonUser){
     return User(
       jsonUser['id'],
