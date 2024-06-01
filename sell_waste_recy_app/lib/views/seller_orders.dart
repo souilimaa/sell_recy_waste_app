@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:open_file/open_file.dart';
 
 class SellerOrders extends StatefulWidget {
   const SellerOrders({super.key});
@@ -96,36 +97,77 @@ class _SellerOrdersState extends State<SellerOrders> {
       });
     }
   }
-  Future<void> generatePDF() async {
-    // Request storage permission
-    if (await Permission.storage.request().isGranted) {
-      final pdf = pw.Document();
 
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text('Hello, World!'),
-            );
-          },
-        ),
-      );
 
-      final output = await getExternalStorageDirectory();
-      final downloadsDir = Directory('/storage/emulated/0/Download'); // Path to the Downloads folder on Android
+  Future<void> _createAndSavePdf(SellerOrder order, Product product) async {
+    final pdf = pw.Document();
 
-      if (!downloadsDir.existsSync()) {
-        downloadsDir.createSync(recursive: true);
+    // Add content to the PDF document
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.center, // Center align the column
+            children: [
+              pw.Text('Facture de la commande #${order.orderLine.orderName}/${order.orderLine.order_line_id}',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18), // Increase font size
+                  textAlign: pw.TextAlign.center), // Center align the text
+              pw.SizedBox(height: 20),
+              pw.Text('Informations sur la commande:',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16), // Increase font size
+                  textAlign: pw.TextAlign.center), // Center align the text
+              pw.Text('Nom du produit: ${product.name}', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.Text('Quantité: ${order.orderLine.product_uom_qty?.toInt().toString()}', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.Text('Prix unitaire: ${product.list_price} MAD', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.Text('Prix total: ${product.list_price*order.orderLine.product_uom_qty} MAD', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.SizedBox(height: 20),
+              pw.Text('Informations sur le client:',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16), // Increase font size
+                  textAlign: pw.TextAlign.center), // Center align the text
+              pw.Text('Nom: ${order.customer.name}', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.Text('Téléphone: ${order.customer.phone}', style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.SizedBox(height: 20),
+              pw.Text('Adresse de livraison:',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16), // Increase font size
+                  textAlign: pw.TextAlign.center), // Center align the text
+              pw.Text(order.adresse, style: pw.TextStyle(fontSize: 14)), // Increase font size
+              pw.Text('${order.city}, ${order.region}', style: pw.TextStyle(fontSize: 14)), // Increase font size
+            ],
+          );
+        },
+      ),
+
+    );
+
+    try {
+      // Ensure the downloads directory exists
+      Directory downloadsDirectory = Directory('/storage/emulated/0/Download');
+      if (!await downloadsDirectory.exists()) {
+        downloadsDirectory.create(recursive: true);
       }
 
-      final file = File("${downloadsDir.path}/example.pdf");
+      // Generate a unique file name
+      String fileName = 'facture_commande_${order.orderLine.orderName}_${order.orderLine.order_line_id}.pdf';
+      int counter = 1;
+      while (await File('${downloadsDirectory.path}/$fileName').exists()) {
+        fileName = 'facture_commande_${order.orderLine.order_line_id}_$counter.pdf';
+        counter++;
+      }
 
-      await file.writeAsBytes(await pdf.save());
-      print('PDF saved to ${file.path}');
-    } else {
-      print('Permission denied');
+      File pdfFile = File('${downloadsDirectory.path}/$fileName');
+
+      // Save the PDF file
+      await pdfFile.writeAsBytes(await pdf.save());
+
+      // Open the PDF file
+      await OpenFile.open(pdfFile.path);
+    } catch (e) {
+      print('Error: $e');
     }
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -487,7 +529,17 @@ class _SellerOrdersState extends State<SellerOrders> {
                                                       ),
                                                       orders?[index].orderLine.state!="En attente"? ElevatedButton(
 
-                                                        onPressed: generatePDF,
+                                                        onPressed:()async{
+                                                          await _createAndSavePdf(orders![index],product);
+                                                          ScaffoldMessenger.of(context).showSnackBar(
+                                                            SnackBar(
+                                                              backgroundColor: Colors.green,
+                                                              content: Text('Votre facture a été téléchargée avec succès'),
+                                                              duration: Duration(seconds: 4),
+                                                            ),
+                                                          );
+
+                                                          },
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [

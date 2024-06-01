@@ -46,6 +46,7 @@ dependencies:
   open_file:
   flutter_downloader:
   permission_handler:
+  mailer:
 
 
   # The folipconfilowing adds the Cupertino Icons font to your application.
