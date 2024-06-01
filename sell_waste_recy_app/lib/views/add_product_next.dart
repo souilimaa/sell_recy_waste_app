@@ -27,6 +27,18 @@ class _AddProductNextState extends State<AddProductNext> {
     // Check if the number is greater than 0
     return number > 0;
   }
+  bool isValidatePrice(String input) {
+    // Check if the input is empty or contains invalid characters
+    if (input.isEmpty || input.contains(RegExp(r'[^\d.]')) || input.split('.').length > 2) {
+      return false;
+    }
+
+    // Convert the input string to a double
+    double? number = double.tryParse(input);
+
+    // Check if the conversion was successful and the number is greater than 0
+    return number != null && number > 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +122,7 @@ class _AddProductNextState extends State<AddProductNext> {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Ce champs est obligatoire';
-                                      } else if (!isValidateNumber(value)) {
+                                      } else if (!isValidatePrice(value)) {
                                         return 'Donnée invalide';
                                       }
                                       return null;
@@ -201,6 +213,15 @@ class _AddProductNextState extends State<AddProductNext> {
 
                                           if (success) {
                                             print('Product added successfully');
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor: Colors.green,
+                                                    content: Text('Produit ajouté avec succès'),
+                                                    duration: Duration(seconds: 3),
+                                                  ),
+                                                );
+                                            Navigator.pushNamed(context, '/sellProducts');
+
                                             setState(() {
                                               isAdded='';
                                             });

@@ -71,35 +71,34 @@ class UserController {
   }
 
   static Future<bool> login(User u) async {
-      String url = 'http://${AuthController.ip}:8017/userLogin';
-      Map<String, dynamic> body = {
-        "email": u.email,
-        "password": u.password,
-      };
-      Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Cookie': 'session_id=${AuthController.sessionID}'
-      };
-      http.Response response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: jsonEncode(body),
-      );
-      if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = json.decode(response.body);
-        bool success = jsonResponse['result']['success'];
-        if (success) {
-          userId=jsonResponse['result']['user'];
-          return true;
-        }
-        else{
-          return false;
-        }
+    String url = 'http://${AuthController.ip}:8017/userLogin';
+    Map<String, dynamic> body = {
+      "email": u.email,
+      "password": u.password,
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Cookie': 'session_id=${AuthController.sessionID}'
+    };
+    http.Response response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      bool success = jsonResponse['result']['success'];
+      if (success) {
+        userId = jsonResponse['result']['user'];
+        return true;
       }
+      else {
+        return false;
+      }
+    }
 
-        print('Failed to login. Status code: ${response.statusCode}');
-        throw Exception('Failed to login. Status code: ${response.statusCode}');
-
+    print('Failed to login. Status code: ${response.statusCode}');
+    throw Exception('Failed to login. Status code: ${response.statusCode}');
   }
 
 
@@ -115,13 +114,20 @@ class UserController {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      Map<String, dynamic> result=jsonResponse['result'];
-      Map<String, dynamic> user=result['user'];
+      Map<String, dynamic> result = jsonResponse['result'];
+      Map<String, dynamic> user = result['user'];
 
-      return User(user['id'],user['name'],user['email'],user['phone'],user['password'],user['image']);
-
+      return User(
+          user['id'],
+          user['name'],
+          user['email'],
+          user['phone'],
+          user['password'],
+          user['image'],
+          user['paypal_account']);
     }
-    throw Exception('Failed to get user. Status code: ${response.statusCode} }');
+    throw Exception(
+        'Failed to get user. Status code: ${response.statusCode} }');
   }
 
 
@@ -151,12 +157,26 @@ class UserController {
     // Parse JSON response
     var jsonResponse = json.decode(responseData);
     if (response.statusCode == 200) {
-
       return jsonResponse['success'];
     } else {
       return false;
     }
   }
 
+  static Future<bool> devenirVendeur(String paypal_account) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Cookie': 'session_id=${AuthController.sessionID}'
+    };
+    String url = "http://${AuthController.ip}:8017/updatePaypalAccount";
+    var response = await http.post(Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(
+            {"id": UserController.userId, "paypal_account": paypal_account}));
 
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

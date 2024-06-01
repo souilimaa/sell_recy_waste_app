@@ -273,7 +273,7 @@ class _CheckOutState extends State<CheckOut> {
                                 ),
                               ),
                               Text(
-                                '${getTotalAmount()} MAD',
+                                '${getTotalAmount().toStringAsFixed(2)} MAD',
                                 style: TextStyle(),
                               )
                             ],

@@ -12,6 +12,7 @@ import '../models/city.dart';
 import '../models/order.dart';
 import '../models/payment.dart';
 import '../models/region.dart';
+import 'acceuil.dart';
 
 class Paiment extends StatefulWidget {
   final String userName;
@@ -38,10 +39,11 @@ class _PaimentState extends State<Paiment> {
     total=widget.total*0.10;
 
     for (Cart cartItem in Panier.panierList) {
+
       items.add({
         "name": cartItem.product.name,
         "quantity": cartItem.quantity,
-        "price": (cartItem.product.list_price * 0.10).toString(),
+        "price": (cartItem.product.list_price * 0.10).toStringAsFixed(2),
         "currency": "USD"
       });
     }
@@ -57,14 +59,8 @@ class _PaimentState extends State<Paiment> {
 
   void navigateToAcceuil() {
     Navigator.popUntil(context, ModalRoute.withName('/acceuil'));
-    //Navigator.pushNamed(context, '/acceuil');
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>MyOrders()
-      ),
+    Navigator.pushNamed(context, '/acceuil');
 
-    );
   }
 
   int getNumberArticles() {
@@ -165,7 +161,7 @@ class _PaimentState extends State<Paiment> {
                           ),
                         ),
                         Text(
-                          '${getTotalAmount() * 10} MAD',
+                          '${(getTotalAmount() * 10).toStringAsFixed(2)} MAD',
                           style: TextStyle(),
                         )
                       ],
@@ -205,7 +201,7 @@ class _PaimentState extends State<Paiment> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${getTotalAmount() * 10 + 100} MAD',
+                              '${(getTotalAmount() * 10 + 100).toStringAsFixed(2)} MAD',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red),
@@ -228,6 +224,8 @@ class _PaimentState extends State<Paiment> {
                   double shipping= 100*0.10;
                   print(calculatedTotal);
                   print(formattedTotal);
+                  print(getTotalAmount().toStringAsFixed(2));
+                  print(60.80+100*0.10);
 
 
                   Navigator.of(context).push(MaterialPageRoute(
@@ -242,10 +240,10 @@ class _PaimentState extends State<Paiment> {
                       transactions: [
                         {
                           "amount": {
-                            "total": calculatedTotal.toStringAsFixed(2),
+                            "total": formattedTotal,
                             "currency": "USD",
                             "details": {
-                              "subtotal": '${getTotalAmount()}',
+                              "subtotal": getTotalAmount().toStringAsFixed(2),
                               "shipping": shipping.toStringAsFixed(2),
                               "shipping_discount": 0
                             }

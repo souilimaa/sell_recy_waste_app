@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
 import '../controllers/auth.dart';
 import '../controllers/order_controller.dart';
 import '../controllers/product_controller.dart';
 import '../models/product.dart';
 import '../models/seller_order.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:permission_handler/permission_handler.dart';
 
 class SellerOrders extends StatefulWidget {
   const SellerOrders({super.key});
@@ -91,7 +96,36 @@ class _SellerOrdersState extends State<SellerOrders> {
       });
     }
   }
+  Future<void> generatePDF() async {
+    // Request storage permission
+    if (await Permission.storage.request().isGranted) {
+      final pdf = pw.Document();
 
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Text('Hello, World!'),
+            );
+          },
+        ),
+      );
+
+      final output = await getExternalStorageDirectory();
+      final downloadsDir = Directory('/storage/emulated/0/Download'); // Path to the Downloads folder on Android
+
+      if (!downloadsDir.existsSync()) {
+        downloadsDir.createSync(recursive: true);
+      }
+
+      final file = File("${downloadsDir.path}/example.pdf");
+
+      await file.writeAsBytes(await pdf.save());
+      print('PDF saved to ${file.path}');
+    } else {
+      print('Permission denied');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -451,8 +485,25 @@ class _SellerOrdersState extends State<SellerOrders> {
                                                           ),
                                                         ),
                                                       ),
+                                                      orders?[index].orderLine.state!="En attente"? ElevatedButton(
 
-                                                    ],),
+                                                        onPressed: generatePDF,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Icon(Icons.download_sharp,color: Colors.white,),
+                                                            Text('Invoice',style: TextStyle(color: Colors.white),),
+                                                          ],
+                                                        ),
+                                                        style: ElevatedButton.styleFrom(
+                                                          backgroundColor:Colors.blue.shade400,
+                                                        ),
+                                                      ):Center()
+
+                                                    ],
+
+
+                                                  ),
                                                   SizedBox(height: 5,),
                                                   getStateButton(orders?[index].orderLine.state)!=''?Container(
                                                     width: double.infinity,
@@ -474,8 +525,21 @@ class _SellerOrdersState extends State<SellerOrders> {
                                                         )
 
                                                     ),
-                                                  ):Center()
+                                                  )
+
+
+                                                      :Center(),
+
+
+
+
+
                                                 ],
+
+
+
+
+
                                               ),
                                             ),
                                           ),
@@ -492,4 +556,8 @@ class _SellerOrdersState extends State<SellerOrders> {
                     ),
                   ]));
   }
+
+
+
+
 }

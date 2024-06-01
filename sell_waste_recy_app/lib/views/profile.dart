@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
@@ -29,14 +31,14 @@ class _ProfileState extends State<Profile> {
         appBar: AppBar(
           backgroundColor: Colors.green,
           iconTheme: IconThemeData(color: Colors.white),
-          title:  Text(
+          title: Text(
             'Profil',
             style: GoogleFonts.assistant(
-              textStyle:TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18  ,
-              )
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                )
             ),
           ),
           centerTitle: true,
@@ -50,41 +52,46 @@ class _ProfileState extends State<Profile> {
             Center(
               child: Stack(children: [
                 Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.green.shade200,
-                      width: 2,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.green.shade200,
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  child: FutureBuilder<User>(
-                    future: u,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasData) {
-                        final user = snapshot.data!;
-                        if (user.image!="") {
-                          return CircleAvatar(
-                            radius: 70,
-                            backgroundImage: NetworkImage(
-                              user.image,
-                              headers: {'Cookie': 'session_id=${AuthController.sessionID}'},
-                            ),
-                          );
-                        } else {
-                          return const CircleAvatar(
-                            radius: 70,
-                            backgroundImage: AssetImage("assets/default_supp.png"),
-                          );
+                    child: FutureBuilder<User>(
+                      future: u,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasData) {
+                          final user = snapshot.data!;
+                          if (user.image != "") {
+                            return CircleAvatar(
+                              radius: 70,
+                              backgroundImage: NetworkImage(
+                                user.image + "?v=${Random().nextInt(1000000)}",
+                                headers: {
+                                  'Cookie': 'session_id=${AuthController
+                                      .sessionID}'
+                                },
+                              ),
+                            );
+                          } else {
+                            return const CircleAvatar(
+                              radius: 70,
+                              backgroundImage: AssetImage(
+                                  "assets/defaultupp.png"),
+                            );
+                          }
+                        } else if (snapshot.hasError) {
+                          print('${snapshot.error}');
+                          return Text('${snapshot.error}');
                         }
-                      } else if (snapshot.hasError) {
-                        print('${snapshot.error}');
-                        return Text('${snapshot.error}');
-                      }
-                      return const CircularProgressIndicator();
-                    },
-                  )
+                        return const CircularProgressIndicator();
+                      },
+                    )
                 ),
               ]),
             ),
@@ -192,8 +199,7 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/mesCommandes');
-
+                            Navigator.pushNamed(context, '/mesCommands');
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
@@ -229,49 +235,109 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         SizedBox(height: 15),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context,
-                                '/sellerDash');
-                            },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.transparent),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.settings,
-                                    size: 28,
-                                    color: Colors.green,
+                        FutureBuilder<User>(
+                          future: u,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+                              if (snapshot.data?.paypal_account != false) {
+                                return TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context,
+                                        '/sellerDash');
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<
+                                        Color>(
+                                        Colors.transparent),
                                   ),
-                                  SizedBox(width: 14),
-                                  Text(
-                                    'Gestion des ventes',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.settings,
+                                            size: 28,
+                                            color: Colors.green,
+                                          ),
+                                          SizedBox(width: 14),
+                                          Text(
+                                            'Gestion des ventes',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        size: 28,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                size: 28,
-                                color: Colors.grey,
-                              ),
-                            ],
-                          ),
+                                );
+                              } else {
+                                return TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context,
+                                        '/beSeller');
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<
+                                        Color>(
+                                        Colors.transparent),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.settings,
+                                            size: 28,
+                                            color: Colors.green,
+                                          ),
+                                          SizedBox(width: 14),
+                                          Text(
+                                            'Devenir vendeur',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        size: 28,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            } else if (snapshot.hasError) {
+                              print('${snapshot.error}');
+                              return Text('${snapshot.error}');
+                            }
+                            return const CircularProgressIndicator();
+                          },
                         ),
+
                         SizedBox(height: 15),
                         TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
@@ -310,7 +376,8 @@ class _ProfileState extends State<Profile> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/');                         },
+                            Navigator.pushReplacementNamed(context, '/');
+                          },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
@@ -342,4 +409,3 @@ class _ProfileState extends State<Profile> {
   }
 
 }
-

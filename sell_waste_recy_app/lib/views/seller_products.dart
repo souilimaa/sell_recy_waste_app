@@ -468,7 +468,12 @@ class _SellerProductsState extends State<SellerProducts> {
 
                                                         }
                                                       },
-                                                      child: Text('Modifier')),
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors.green.shade600,
+                                                      ),
+                                                      child: Text('Modifier',
+                                                      style: TextStyle(color: Colors.white),
+                                                      )),
                                                 )
                                               ],
                                             ),

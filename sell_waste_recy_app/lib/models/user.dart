@@ -8,7 +8,8 @@ class User {
   var phone;
   var password;
   var image;
-  User(this.id, this.name, this.email, this.phone, this.password,this.image);
+  var paypal_account;
+  User(this.id, this.name, this.email, this.phone, this.password,this.image,this.paypal_account);
   User.withoutId(this.name, this.email, this.phone, this.password,{this.image});
   User.login(this.email,this.password,{this.image});
   User.order(this.name,this.email,this.phone);
@@ -20,6 +21,7 @@ class User {
       jsonUser['phone'],
       jsonUser['password'],
       jsonUser['image'],
+      jsonUser['paypal_account']
     );
   }
 

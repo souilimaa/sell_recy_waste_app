@@ -175,7 +175,7 @@ class ProductController {
         body: jsonEncode({
           'product_id': productId,
           'qty_available': qtyAvailable,
-          'liste_price': listPrice
+          'list_price': listPrice
         })
     );
 

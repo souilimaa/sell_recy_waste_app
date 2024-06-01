@@ -41,6 +41,11 @@ dependencies:
   flutter_paypal:
   flutter_paypal_checkout:
   intl:
+  pdf:
+  path_provider:
+  open_file:
+  flutter_downloader:
+  permission_handler:
 
 
   # The folipconfilowing adds the Cupertino Icons font to your application.
