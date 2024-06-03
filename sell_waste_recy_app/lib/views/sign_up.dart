@@ -347,11 +347,19 @@ class _SignupState extends State<Signup> {
                           bool isCreated = await UserController.SignUp(u);
                           if (isCreated) {
                             print('User created successfully');
-                            setState(() {
-                              serverError = '';
-                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text('Compte crée avec succès'),
+                                duration: Duration(seconds: 3),
+                              ),
+                            );
+                            Navigator.pushNamed(context, '/login');
+
+
                           } else {
-                            print('Failed to Sign up. Email already exists.');
+                            print('Failed to Sign up. Email already exist.');
                             setState(() {
                               serverError ="Failed to Sign up. Email already exists.";
                             });

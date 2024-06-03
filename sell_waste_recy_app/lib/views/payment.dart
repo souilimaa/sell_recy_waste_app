@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:sell_waste_recy_app/controllers/order_controller.dart';
 import 'package:sell_waste_recy_app/controllers/user_controller.dart';
 import 'package:sell_waste_recy_app/models/order_line.dart';
@@ -31,6 +33,7 @@ class Paiment extends StatefulWidget {
 class _PaimentState extends State<Paiment> {
   List<Map<String, dynamic>> items = [];
   double? total;
+  List<int> sellers=[];
 
 
   @override
@@ -39,7 +42,6 @@ class _PaimentState extends State<Paiment> {
     total=widget.total*0.10;
 
     for (Cart cartItem in Panier.panierList) {
-
       items.add({
         "name": cartItem.product.name,
         "quantity": cartItem.quantity,
@@ -70,6 +72,41 @@ class _PaimentState extends State<Paiment> {
     }
     return total;
   }
+  void sendEmail(String email_destinataire,Cart item,String order) async {
+    String username = 'somamy19@gmail.com';
+    String password = 'kholhdjtnwuytbsx';
+
+    final smtpServer = gmail(username, password);
+
+    final message = Message()
+      ..from = Address(username, 'EcoTrade')
+      ..recipients.add(email_destinataire)
+      ..subject = 'Nouvelle commande reçue sur EcoTrade'
+    ..text = '''
+Bonjour,
+
+Nous avons le plaisir de vous informer qu'une nouvelle commande a été passée pour l'un de vos produits sur EcoTrade.
+
+Détails de la commande :
+
+    Numéro de commande : $order
+    Produit commandé : ${item.product.name}
+    Quantité : ${item.quantity}
+    Prix : ${item.product.list_price}
+
+Merci pour votre confiance,
+EcoTrade
+    ''';
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('E-mail envoyé: ${sendReport.toString()}');
+    } on MailerException catch (e) {
+      print('E-mail non envoyé.${e}');
+
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -299,9 +336,15 @@ class _PaimentState extends State<Paiment> {
                         DateTime now = DateTime.now();
                         String formattedDateTime = now.toIso8601String();
                         Order o=Order(widget.total,widget.city.id,formattedDateTime,UserController.userId,widget.province.id,widget.adresse);
-                       bool newOrder = await OrderController.addOrder(p, o, orderLines);
+                       String newOrder = await OrderController.addOrder(p, o, orderLines);
 
+                        for(Cart cartItem in Panier.panierList){
+                          int seller_id=cartItem.product.seller_id;
+                          var email=await UserController.getUserEmail(seller_id);
+                          print(email);
+                          sendEmail(email,cartItem,newOrder);
 
+                        }
 
 
 
@@ -312,11 +355,15 @@ class _PaimentState extends State<Paiment> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.green,
-                            content: Text('Paiement réussi!'),
+                            content: Text('Paiement réussi! Votre Commande est enregistrée'),
                             duration: Duration(seconds: 4),
                           ),
                         );
-                        navigateToAcceuil();
+
+                        Navigator.popUntil(context, ModalRoute.withName('/acceuil'));
+
+
+                       // navigateToAcceuil();
                       },
                       onError: (error) {
                         print("onError: $error");

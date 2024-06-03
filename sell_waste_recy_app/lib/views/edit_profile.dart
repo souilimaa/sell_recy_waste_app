@@ -21,7 +21,6 @@ class _EditProfileState extends State<EditProfile> {
   var nameC = TextEditingController();
   var emailC = TextEditingController();
   var phoneC = TextEditingController();
-  var passwordC = TextEditingController();
   String imageData = "";
 
   @override
@@ -41,7 +40,6 @@ class _EditProfileState extends State<EditProfile> {
         nameC.text = user.name;
         emailC.text = user.email;
         phoneC.text = user.phone;
-        passwordC.text = user.password;
         id = user.id;
         if (user.image != "") {
           print("kkkkk" + user.image);
@@ -375,9 +373,9 @@ class _EditProfileState extends State<EditProfile> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: TextFormField(
-                                controller: passwordC,
                                 obscureText: true,
                                 decoration: InputDecoration(
+                                  hintText: "Entrer votre Nouveau Mot de passe",
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 10.0, horizontal: 15),
                                   enabledBorder: OutlineInputBorder(
@@ -406,9 +404,6 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Ce champs est requis';
-                                  }
                                   password = value;
                                   return null;
                                 },
@@ -439,7 +434,8 @@ class _EditProfileState extends State<EditProfile> {
 
                                       if (success) {
                                         print('User updated successfully');
-                                        Navigator.pushNamed(context, '/profile');
+                                        Navigator.popUntil(context, ModalRoute.withName('/profile'));
+
                                       } else {
                                         print('Failed to update user');
                                       }

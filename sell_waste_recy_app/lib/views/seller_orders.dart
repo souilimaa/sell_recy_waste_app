@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:sell_waste_recy_app/controllers/user_controller.dart';
 import '../controllers/auth.dart';
 import '../controllers/order_controller.dart';
 import '../controllers/product_controller.dart';
@@ -98,7 +101,43 @@ class _SellerOrdersState extends State<SellerOrders> {
     }
   }
 
+  void sendEmail(String email_destinataire,String state, SellerOrder order,String p) async {
+    String username = 'somamy19@gmail.com';
+    String password = 'kholhdjtnwuytbsx';
 
+    final smtpServer = gmail(username, password);
+    final emailBody = """
+  Bonjour ${order.customer.name},
+
+  Nous avons le plaisir de vous informer que votre commande a été $state avec succès.
+
+  Détails de la commande :
+
+      Numéro de commande : ${order.orderLine.orderName}/${order.orderLine.order_line_id}
+      Date de commande : ${order.orderLine.order_date}
+      Produit commandé : ${p}
+      
+
+  Merci pour votre confiance et votre achat sur EcoTrade. 
+
+  Cordialement,
+
+  L'équipe EcoTrade
+  """;
+    final message = Message()
+      ..from = Address(username, 'EcoTrade')
+      ..recipients.add(email_destinataire)
+      ..subject = 'Nouvelle commande reçue sur EcoTrade'
+      ..text = emailBody;
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('E-mail envoyé: ${sendReport.toString()}');
+    } on MailerException catch (e) {
+      print('E-mail non envoyé.${e}');
+
+    }
+  }
   Future<void> _createAndSavePdf(SellerOrder order, Product product) async {
     final pdf = pw.Document();
 
@@ -562,6 +601,7 @@ class _SellerOrdersState extends State<SellerOrders> {
                                                     child: ElevatedButton(
                                                         onPressed: () async{
                                                           bool success=await OrderController.updateOrderState(orders![index].orderLine.order_line_id,orders?[index].orderLine.state=="En attente"?'sent':'sale');
+                                                          sendEmail(orders![index].customer.email,orders?[index].orderLine.state=="En attente"?'Confirmé':'Livré',orders![index],product.name);
                                                           setState(() {
                                                             if(selectedOrdersState==''){
                                                               fetchOrders();
@@ -570,6 +610,8 @@ class _SellerOrdersState extends State<SellerOrders> {
                                                               fetchOrdersbyState(selectedOrdersState);
                                                             }
                                                           });
+
+
 
                                                         },
                                                         child: Text(

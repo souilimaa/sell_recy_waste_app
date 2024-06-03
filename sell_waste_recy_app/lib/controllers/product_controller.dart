@@ -61,8 +61,8 @@ class ProductController {
             productJson['seller_id'],
             productJson['list_price']);
       }).toList();
-      print(products);
-      print('success');
+
+
       return products;
     } else {
       print('Failed to get products code: ${response.statusCode}');
@@ -94,8 +94,6 @@ class ProductController {
             productJson['seller_id'],
             productJson['list_price']);
       }).toList();
-      print(products);
-      print('success');
       return products;
     } else {
       print('Failed to get products code: ${response.statusCode}');
@@ -127,8 +125,6 @@ class ProductController {
             productJson['seller_id'],
             productJson['list_price']);
       }).toList();
-      print(products);
-      print('success');
       return products;
     } else {
       print('Failed to get products code: ${response.statusCode}');

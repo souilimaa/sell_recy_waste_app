@@ -179,4 +179,24 @@ class UserController {
     }
     return false;
   }
+
+
+  static Future<String> getUserEmail(int id) async {
+    String email = '';
+    var headers = {
+      'Content-Type': 'application/json',
+      'Cookie': 'session_id=${AuthController.sessionID}'
+    };
+    String url = "http://${AuthController.ip}:8017/getUserEmail";
+    var response = await http.post(Uri.parse(url),
+        headers: headers,
+        body: jsonEncode({"id": id}));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      Map<String, dynamic> result = jsonResponse['result'];
+      email = result['email'];
+    }
+    return email;
+  }
 }

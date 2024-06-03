@@ -220,7 +220,8 @@ class _AddProductNextState extends State<AddProductNext> {
                                                     duration: Duration(seconds: 3),
                                                   ),
                                                 );
-                                            Navigator.pushNamed(context, '/sellProducts');
+                                            Navigator.popUntil(context, ModalRoute.withName('/sellerDash'));
+
 
                                             setState(() {
                                               isAdded='';

@@ -10,7 +10,7 @@ import '../models/seller_order.dart';
 import 'auth.dart';
 
 class OrderController {
-  static Future<bool> addOrder(Payment p,Order order,List<OrderLine> orderLines) async {
+  static Future<String> addOrder(Payment p,Order order,List<OrderLine> orderLines) async {
     String url = 'http://${AuthController.ip}:8017/addOrder';
     List<Map<String, dynamic>> orderLinesData = [];
 
@@ -61,9 +61,11 @@ class OrderController {
     );
 
     if(response.statusCode==200){
-      return true;
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final Map<String,dynamic> result = jsonResponse['result'];
+      return result['order'];
     }
-return false;
+return '';
   }
   static Future<List<OrderLine>> getOrders() async {
     String url = 'http://${AuthController.ip}:8017/getOrders';

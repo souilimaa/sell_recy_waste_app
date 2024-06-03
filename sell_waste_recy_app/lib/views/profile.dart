@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sell_waste_recy_app/views/panier.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 import '../controllers/user_controller.dart';
@@ -22,6 +24,17 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     u = UserController.getUserById(UserController.userId);
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context)?.isCurrent == true) {
+      print("hi");
+      // Refetch user data whenever the widget is visible
+      setState(() {
+        u = UserController.getUserById(UserController.userId);
+      });
+    }
   }
 
   @override
@@ -375,8 +388,13 @@ class _ProfileState extends State<Profile> {
                           height: 25,
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/');
+                          onPressed: ()async{
+                            Panier.panierList=[];
+                            UserController.userId=0;
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            prefs.remove('userId');
+                            Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
+
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(

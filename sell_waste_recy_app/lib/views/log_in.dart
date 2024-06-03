@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/user_controller.dart';
 import '../models/user.dart';
@@ -171,7 +172,10 @@ class _LoginState extends State<Login> {
                                 if (isLogin) {
                                   print('User login successfully');
                                   print("pfhdkjfgjksdf");
-                                  Navigator.pushNamed(context,'/acceuil');
+                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  prefs.setInt('userId', UserController.userId);
+
+                                  Navigator.pushNamedAndRemoveUntil(context, '/acceuil', (route) => false);
 
                                 }
                                 else {
